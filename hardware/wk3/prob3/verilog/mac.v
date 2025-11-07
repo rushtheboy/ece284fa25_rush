@@ -12,7 +12,7 @@ output reg [psum_bw-1:0] out;
 
 output wire [psum_bw-1:0] output_s;
 
-assign output_s = $unsigned(a) * $unsigned(b) + $unsigned(c);
+assign output_s = $signed(a) * $signed(b) + $signed(c);
 
 always @ (posedge clk) begin
     if (reset) begin
