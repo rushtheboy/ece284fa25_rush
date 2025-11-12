@@ -5,23 +5,14 @@ module mac (out, a, b, c);
 parameter bw = 4;
 parameter psum_bw = 16;
 
-input a,b,c;
 input signed [bw-1:0] a; // signed 4 bit weight
 input [bw-1:0] b; //unsigned 4 bit activation
-output reg [psum_bw-1:0] out; 
+input [psum_bw-1:0] c; // input carryover
+output [psum_bw-1:0] out; // signed 16 bit partial sum output
 
-output wire [psum_bw-1:0] output_s;
+wire signed [psum_bw-1:0] product;
+assign product = a * $signed(b);
 
-assign output_s = $signed(a) * $signed(b) + $signed(c);
+assign out = psum + $signed(product);
 
-always @ (posedge clk) begin
-    if (reset) begin
-        out <= 0;
-    end 
-    else begin
-        out <= output_s;
-    end
-end
-
-
-endmodule
+endmodule   
